@@ -29,80 +29,38 @@
 var renderArea=document.getElementById("renderArea");
  
 function execFile() {
-// main function to open, parse, and then render
  var myfile=document.getElementById("F1");
  
- // verify file extension (csv or not)
- if (myfile.value.match(/\.csv$/gi)==".csv") {
- // create progress window..
- var progressWindow = window.open("","","top=10,left=10,height=100,width=200");
- progressWindow.document.write("<html><head></head><body>
-<div id='progressArea'></div>
-</body></html>");
- var progressArea = progressWindow.document.getElementById("progressArea");
  
  // load csv file and split it line by line
- var arr = readCSV(myfile.value);
- 
+ //var arr = readCSV(myfile.value);
+var arr = "Year,Make,Model,Description,Price \n\
+1997,Ford,E350,\"ac, abs, moon\",3000.00 \n\
+1999,Chevy,\"Venture \"\"Extended Edition\"\"\",\"\",4900.00 \n\
+1999,Chevy,\"Venture \"\"Extended Edition, Very Large\"\"\",,5000.00 \n\
+1996,Jeep,Grand Cherokee,\"MUST SELL! air, moon roof, loaded\",4799.0\
+".split(/\n/g);
+
+
  // parse csv line by line
  for (var i=0;i<arr.length;i++) {
  arr[i] = parseLineCSV(arr[i]);
- progressArea.innerHTML="Parsing: "+(i+1)+" of "+arr.length;
  }
  
  // render the result into html table
- s='
-<table border=1>';
+ s='<table border=1>';
  for (var i=0;i<arr.length;i++) {
- s=s+'
-<tr>';
+s=s+'<tr>';
  for (var j=0;j<arr[i].length;j++) {
- s=s+'
-<td><font size="1" face="Verdana">'+arr[i][j]+'</font></td>
-';
+ s=s+'<td><font size="1" face="Verdana">'+arr[i][j]+'</font></td>';
  }
- progressArea.innerHTML="Table rendering: "+(i+1)+" of "+arr.length;
- s=s+'</tr>
-';
+ //progressArea.innerHTML="Table rendering: "+(i+1)+" of "+arr.length;
+ s=s+'</tr>';
  }
- s=s+'</table>
-';
+ s=s+'</table>';
  
- // close progress window after all tasks are completed
- progressWindow.close();
- } else {
- // show this if user tries to open non csv file
- s='<b><font size="1" face="Verdana" color="#FF0000">Not a CSV file!</font></b>';
- }
  
  renderArea.innerHTML=s;
-}
- 
-//The following code is depicted from Professional Javascript for
-// Web Developers, a book by Nicholas C.Zakas
-if (typeof XMLHttpRequest == "undefined" && window.ActiveXObject) {
- function XMLHttpRequest() {
- var arrSignatures = ["MSXML2.XMLHTTP.5.0", "MSXML2.XMLHTTP.4.0",
- "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP",
- "Microsoft.XMLHTTP"];
- for (var i=0; i < arrSignatures.length; i++) {
- try {
- var oRequest = new ActiveXObject(arrSignatures[i]);
- return oRequest;
- } catch (oError) {
- //ignore
- }
- }
- throw new Error("MSXML is not installed on your system.");
- }
-}
- 
-function readCSV(locfile) {
-// load a whole csv file, and then split it line by line
- var req = new XMLHttpRequest();
- req.open("POST",locfile,false);
- req.send("");
- return req.responseText.split(/\n/g);
 }
  
 function parseLineCSV(lineCSV) {
