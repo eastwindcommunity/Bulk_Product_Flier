@@ -3,10 +3,154 @@
 <head>
 <!--Code from https://purbayubudi.wordpress.com/2008/11/09/cs-pkhrser-using-javascript/ -->
 <title>- CSV parser -</title>
+<style type="text/css" media="print">
+
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+   #Pamphlet_Information {
+     display:none;
+   }
+   #page{
+    width: 8.5in;
+    heightt; 11 in;
+    position: fixed;
+    left: 0in;
+   }
+   #titleArea{
+     position: absolute;
+     left: 0in;
+     top: 0in;
+     width: 8.5in;
+     height: 9in;
+     background-color: 7a5230;
+   }
+
+   #summaryArea{
+     position: absolute;
+     left: 0in; 
+     top: 2in;
+     width: 2.5in;
+     height: 9in;
+     background-color: #BBBB77;
+   }
+
+   #renderArea{
+     position: absolute;
+     left: 2.5in;
+     top: 2in;
+     width: 6in;
+     height: 9in;
+     background-color: CCCCCC;
+   }
+   p {
+     padding: .1in;
+   }
+</style>
 </head>
 <body>
  
-<form>
+<form id="Pamphlet_Information">
 <textarea id="summary" rows="30" cols="80">
 East Wind Nut Butters are made of natural ingredients.  No sugars, corn syrup, preservatives, hydrogenated oils, or other stabilizers are added.  All of our products are certified Kosher.  All of our packaging is reusable. 
 
@@ -35,6 +179,7 @@ Year,Make,Model,Description,Price
 <input type="reset" value="Reset" name="B2" id="B2" onclick="renderArea.innerHTML=''">
 </form>
 <div id="page">
+<div id="titleArea"></div>
 <div id="summaryArea"></div>
 <div id="renderArea"></div>
 </div>
@@ -63,10 +208,6 @@ for (var i=0; i<summary.length; i++) {
  summary_html= summary_html + "<p>" + summary[i]+ "</p>";
 }
 summaryArea.innerHTML=summary_html;
-
-
- 
-
 
 var arr = document.getElementById('csv').value.split(/\n/g);
 
