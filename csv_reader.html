@@ -1,3 +1,4 @@
+
 <html>
 <head>
 <!--Code from https://purbayubudi.wordpress.com/2008/11/09/cs-pkhrser-using-javascript/ -->
@@ -7,7 +8,21 @@
  
 <form>
 <textarea id="summary" rows="30" cols="80">
+East Wind Nut Butters are made of natural ingredients.  No sugars, corn syrup, preservatives, hydrogenated oils, or other stabilizers are added.  All of our products are certified Kosher.  All of our packaging is reusable. 
 
+Since 1981, East Wind Nut Butters have been made by members of a worker-owned cooperative located in the lovely hills of rural southern Missouri.  We operate democratically and hold our land, labor, and other resources in common.  
+
+As equal partners in our business, we take pride in producing the highest quality products available at the most reasonable prices.  Customers who buy our nut butter receive a delicious, healthy product.  They also contribute to an egalitarian, cooperative way of life.  
+
+For maximum freshness we store our nuts, seeds, and nut butters in a refrigerated warehouse.  Because artifically hydrogenated oils are not used in our products, oil separation does occur; refrigeration slows this process.  At home nut butter can be refrigerated, stored upside down, or simply stirred before use.  
+
+Conctact us at:
+
+East Wind Nut Butters
+1361 County Rd 547
+Tecumseh, MO 65760
+
+sales@eastwindnutbutters.com
 </textarea> 
 <textarea id="csv" rows="30" cols="80">
 Year,Make,Model,Description,Price
@@ -19,7 +34,10 @@ Year,Make,Model,Description,Price
 <input type="button" value="Read" name="B1" id="B1" onclick="execFile()">
 <input type="reset" value="Reset" name="B2" id="B2" onclick="renderArea.innerHTML=''">
 </form>
+<div id="page">
+<div id="summaryArea"></div>
 <div id="renderArea"></div>
+</div>
 <script>
 // -- CSV PARSER --
 // author  : Purbayu, 30Sep2008
@@ -33,13 +51,22 @@ Year,Make,Model,Description,Price
 //  To use this code freely, you must put author's name in it.
  
 var renderArea=document.getElementById("renderArea");
- 
+var summaryArea=document.getElementById("summaryArea"); 
+
 function execFile() {
- var myfile=document.getElementById("F1");
  
+// load csv file and split it line by line
+
+var summary = document.getElementById('summary').value.split(/\n\n/g);
+var summary_html = "";
+for (var i=0; i<summary.length; i++) {
+ summary_html= summary_html + "<p>" + summary[i]+ "</p>";
+}
+summaryArea.innerHTML=summary_html;
+
+
  
- // load csv file and split it line by line
- //var arr = readCSV(myfile.value);
+
 
 var arr = document.getElementById('csv').value.split(/\n/g);
 
