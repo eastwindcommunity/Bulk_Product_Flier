@@ -1,5 +1,4 @@
 
-
 <html>
 <head>
 <!--Code from https://purbayubudi.wordpress.com/2008/11/09/cs-pkhrser-using-javascript/ -->
@@ -243,7 +242,7 @@ stuff,, good\n\
  for (var i=0;i<arr.length;i++) {
 s=s+'<tr>';
  for (var j=0;j<arr[i].length;j++) {
- s=s+'<td><font size="1" face="Verdana">'+arr[i][j]+'</font></td>';
+ s=s+'<td>'+arr[i][j]+'</td>';
  }
  //progressArea.innerHTML="Table rendering: "+(i+1)+" of "+arr.length;
  s=s+'</tr>';
@@ -255,8 +254,15 @@ s=s+'<tr>';
  
 function parseLineCSV(lineCSV) {
 // parse csv line by line into array
- var CSV = new Array();
- 
+var CSV = new Array();
+regex=/,(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/g //regex courtesy of C.Jack Bamford in the comments section of this page: http://www.kimgentes.com/worshiptech-web-tools-page/2008/10/14/regex-pattern-for-parsing-csv-files-with-embedded-commas-dou.html
+CSV=lineCSV.split(regex);
+for(var i = 0; i<CSV.length; i++)
+{
+  CSV[i] = CSV[i].replace(/\"/g,'');
+
+}
+
  // Insert space before character ",". This is to anticipate 'split' in IE
  // try this:
  //
@@ -266,7 +272,7 @@ function parseLineCSV(lineCSV) {
  //
  // You will see unexpected result!
  //
- lineCSV = lineCSV.replace(/,/g," ,");
+/* lineCSV = lineCSV.replace(/,/g," ,");
  
  lineCSV = lineCSV.split(/,/g);
  
@@ -305,10 +311,10 @@ function parseLineCSV(lineCSV) {
  j++;
  }
  }
- 
+*/ 
  return CSV;
 }
- 
+
 </script>
  
 </body>
