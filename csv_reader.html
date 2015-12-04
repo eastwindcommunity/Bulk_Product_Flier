@@ -152,7 +152,26 @@ input, select {
    }
    td{
      margin-left: .1in;
+     font-size: 8pt;
+     padding: 0in 0.1in 0in 0.1in;
    }
+   /*#casepack{
+     background-color: red;
+     text-align: right;
+   }
+   #distribute{
+     background-color: pink;
+   }
+   #isbn{
+     background-color: blue;
+   }
+   #unfinum{
+     background-color: green;
+   }
+   #product{
+     background-color: purple;
+   }
+*/
 
 </style>
 </head>
@@ -238,17 +257,22 @@ stuff,, good\n\
  }
  
  // render the result into html table
- s='<table border=1>';
+ s="<table border='1'>";
+ s=s+"<col id='unfinum'/><col span='2' id='product'/><col id='casepack'/><col id='isbn'/><col id='distribute'/>";
  for (var i=0;i<arr.length;i++) {
 s=s+'<tr>';
  for (var j=0;j<arr[i].length;j++) {
- s=s+'<td>'+arr[i][j]+'</td>';
+  if(arr[i].length === 1){ //this gets titles to not take up so much space.  
+   s=s+"<td colspan='6'>"+ arr[i][j] + '</td>'; 
+ }
+  else{
+    s=s+"<td>"+arr[i][j]+"</td>";
+ }
  }
  //progressArea.innerHTML="Table rendering: "+(i+1)+" of "+arr.length;
  s=s+'</tr>';
  }
  s=s+'</table>';
- 
  renderArea.innerHTML=s;
 }
  
